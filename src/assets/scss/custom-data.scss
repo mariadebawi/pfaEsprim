@@ -1,0 +1,37 @@
+
+.dataTables_filter {
+        margin-right: 8px;
+    }
+.dataTables_info {
+    display: none;
+}
+
+
+.dataTable.no-footer {
+  border-bottom: 1px solid #E9ECEF !important ;
+}
+
+.paginate_button.last ,.paginate_button.first {
+    display: none !important;
+} 
+
+
+
+.page-item.active .page-link {
+    box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+}
+
+
+.dataTables_wrapper div.dataTables_paginate {
+    margin-right: 8px;
+
+}
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover ,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current
+{
+    color: #fff !important;
+    border: none !important;
+    background-color: #EC8624 !important;
+}

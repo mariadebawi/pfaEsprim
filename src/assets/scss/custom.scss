@@ -1,0 +1,78 @@
+
+
+    /*=====================
+        .Fonts
+        ==========================*/
+        @font-face {
+            font-family: 'MontserratBlack';
+            src: url('../fonts/Montserrat/Montserrat-Black.woff2') format('woff2'),
+                url('../fonts/Montserrat/Montserrat-Black.woff') format('woff');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'MontserratBold';
+            src: url('../fonts/Montserrat/Montserrat-Bold.woff2') format('woff2'),
+                url('../fonts/Montserrat/Montserrat-Bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+        @font-face {
+            font-family: 'Montserrat';
+            src: url('../fonts/Montserrat/Montserrat-Light.woff2') format('woff2'),
+                url('../fonts/Montserrat/Montserrat-Light.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+        .regularFont{
+            font-family: 'Montserrat';
+        }
+        .boldFont{
+            font-family: 'MontserratBold';
+
+        }
+  body {
+      font-family: "Montserrat" ;
+  }
+
+  .navbar-collapse {
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.075);
+  }
+
+  .bg-gradient-principale{
+    background: linear-gradient(87deg, rgb(233 ,1, 19) 0, rgb(231,0,13) 100%) ;
+  }
+  .bg-Smart{
+    background-color: rgb(233 ,233 ,235);
+  }
+
+  .table-responsive {
+    overflow-x: hidden;
+  }
+  
+  .btn{
+    color: #fff;
+    &:hover{
+        color: #fff;
+    }
+
+    &.btn-smart{
+        background-color: rgb(236 ,3 ,6);
+      }
+    
+      &.btn-gray{
+        background-color: rgb(170 ,170 ,178);
+
+      }
+
+
+  }
+ 

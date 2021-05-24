@@ -1,0 +1,159 @@
+<div class="header bg-gradient-principale pb-8 pt-5 pt-md-8"></div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+              <div class=" row align-items-center card-header border-0 m-0">
+                <div class="col-8">
+                  <h3 class="mb-0">Liste des étudiants</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a (click)="open(content)" placement="bottom" ngbTooltip="Ajouter un étudiant"  class=" btn btn-sm btn-success btn-add rounded-circle ">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table id="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table align-items-center table-flush">
+                  <thead class="thead-light">
+
+                    <tr>
+                      <th scope="col">Avatar</th>
+                      <th scope="col">Num Inscp</th>
+                      <th scope="col">Nom Prenom</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Filiere</th>
+                      <th scope="col">Date d'ajout</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let e of etudiantsList; let i=index">
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                            <img alt="Image placeholder" [src]="e.avatar ? e.avatar : './assets/img/images/avatar.png'">
+                          </a>
+                          
+                        </div>
+                      </th>
+                      <td>
+                        {{e.numInscrp}}
+                      </td>
+                      <td>
+                        {{e.nom}} {{e.prenom}}
+                         </td>
+                         <td>
+                          {{e.email}}
+                           </td> <td>
+                            {{e.filiere}}
+                             </td> 
+                        <td>
+                          <span class="badge badge-dot mr-4">
+                           {{getDate(e.createdAt)}}
+                          </span>
+                        </td>
+                     
+                      <td class="text-right">
+                        <div ngbDropdown placement="bottom-right">
+                          <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item"  (click)="supprimerEtudiant(e)">Supprimer</a>
+                            <a class="dropdown-item" (click)="open(contentt , e)">Modifier</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+               
+                  </tbody>
+                  
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+    
+  </div>
+
+
+  <!-- create student-->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title  boldFont" id="modal-basic-title">Ajouter un nouveau étudiant</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form  [formGroup]="etudiantForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">nom</label>
+              <input type="text"  formControlName="nom"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.nom.errors }" placeholder="nom">
+              <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.errors.required">saisir le nom</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">prenom</label>
+              <input type="text" placeholder="prenom" formControlName="prenom"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }"  >
+              <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                <div *ngIf="f.prenom.errors.required">saisir le prenom</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">numInscrp</label>
+              <input type="number" class="form-control "  formControlName="numInscrp"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.numInscrp.errors }"   placeholder="numInscrp">
+              <div *ngIf="submitted && f.numInscrp.errors" class="invalid-feedback">
+                <div *ngIf="f.numInscrp.errors.required">saisir la numInscrp</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">email</label>
+              <input type="email" class="form-control "  formControlName="email"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"   placeholder="email">
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">saisir la email</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">filiere</label>
+              <input type="text" class="form-control "  formControlName="filiere"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }"   placeholder="filiere">
+              <div *ngIf="submitted && f.filiere.errors" class="invalid-feedback">
+                <div *ngIf="f.filiere.errors.required">saisir la filiere</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Image</label>
+              <div class="form-group">
+                <input type="file" name="file" id="file"  (change)="onSelectFile($event)" class="form-control-file" >
+                <img [src]="url" height="100" *ngIf="url" class="mt-3">
+              </div>     
+                
+             </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark text-dark mx-2"(click)="modal.dismiss('Cross click')">Annuler</button>
+          <button type="button" type="submit" class="btn btn-success " >Ajouter</button>
+        </div>
+      </form>
+    </div>
+  
+  </ng-template>
+
+
+  

@@ -2,30 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //
 // Variables
 //
@@ -78,6 +54,7 @@ $yellow:  #ffd600 !default;
 $green:   #2dce89 !default;
 $teal:    #11cdef !default;
 $cyan:    #2bffc6 !default;
+$gris:    #e9e9eb  !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -106,8 +83,9 @@ $info:          $teal !default;
 $warning:       $orange !default;
 $danger:        $red !default;
 $light:         $gray-500 !default;
-$dark:          $gray-900 !default;
-$darker:        darken($gray-900, 15%) !default;
+$dark:          $black !default;
+
+$darker:        darken($black, 15%) !default;
 
 $facebook:      #3b5999 !default;
 $twitter:       #1da1f2 !default;
