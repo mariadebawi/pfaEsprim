@@ -156,4 +156,80 @@
   </ng-template>
 
 
+  <ng-template #contentt let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title  boldFont" id="modal-basic-title">Modifier l'etudiant <span class="text-info">{{etudiantUpdated.nom}} {{etudiantUpdated.prenom}}</span> </h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form  [formGroup]="etudiantForm" (ngSubmit)="onSubmitUpdated()">
   
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">nom</label>
+              <input type="text"  formControlName="nom"  [(ngModel)]="etudiantUpdated.nom"   class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.nom.errors }" placeholder="nom">
+              <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.errors.required">saisir le nom</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">prenom</label>
+              <input type="text" placeholder="prenom" formControlName="prenom"  [(ngModel)]="etudiantUpdated.prenom"   class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }"  >
+              <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                <div *ngIf="f.prenom.errors.required">saisir le prenom</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">numInscrp</label>
+              <input type="number" class="form-control "  formControlName="numInscrp" [(ngModel)]="etudiantUpdated.numInscrp"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.numInscrp.errors }"   placeholder="numInscrp">
+              <div *ngIf="submitted && f.numInscrp.errors" class="invalid-feedback">
+                <div *ngIf="f.numInscrp.errors.required">saisir la numInscrp</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">email</label>
+              <input type="email" class="form-control "  formControlName="email"   [(ngModel)]="etudiantUpdated.email"  class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"   placeholder="email">
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">saisir la email</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">filiere</label>
+              <input type="text" class="form-control "  formControlName="filiere"   [(ngModel)]="etudiantUpdated.filiere"  class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }"   placeholder="filiere">
+              <div *ngIf="submitted && f.filiere.errors" class="invalid-feedback">
+                <div *ngIf="f.filiere.errors.required">saisir la filiere</div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Image</label>
+              <div class="form-group">
+                <input type="file" name="file" id="file"  (change)="onSelectFile($event)" class="form-control-file" >
+                <img [src]="etudiantUpdated.avatar?etudiantUpdated.avatar: './assets/img/images/avatar.png'" height="100"  class="mt-3">
+              
+              </div>    
+                
+             </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark text-dark mx-2"(click)="modal.dismiss('Cross click')">Annuler</button>
+          <button type="button" type="submit" class="btn btn-info " >Modifier</button>
+        </div>
+      </form>
+    </div>
+  
+  </ng-template>

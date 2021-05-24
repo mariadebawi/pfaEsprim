@@ -27,7 +27,21 @@ export class EtudiantComponent implements OnInit , OnDestroy {
   etudiantUpdated: Etudiant;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private etudiantService: EtudiantService , private modalService: NgbModal , private formBuilder: FormBuilder) { }
+  constructor(private etudiantService: EtudiantService , private modalService: NgbModal , private formBuilder: FormBuilder) { 
+   
+    if ( $.fn.dataTable.isDataTable('#table') ) {
+      const table = $('#table').DataTable( )      }
+  else {
+    const table = $('#table').DataTable( {
+      paging: false,
+    
+  } );
+  table.destroy();
+
+  }
+   
+
+  }
 
   ngOnInit() {
     this.etudiantForm = this.formBuilder.group({
@@ -38,12 +52,7 @@ export class EtudiantComponent implements OnInit , OnDestroy {
     filiere: ['', Validators.required],
 });
 
-const table = $('#table').DataTable( {
-    paging: false,
-  
-} );
 
-table.destroy();
 
 this.dtOptions = {
   pagingType: 'full_numbers',
@@ -66,7 +75,6 @@ this.dtOptions = {
       )
     ).subscribe(data => {
       this.etudiantsList = data;
-      console.log( this.etudiantsList )
       this.dtTrigger.next();
 
     });
@@ -92,6 +100,7 @@ this.dtOptions = {
       prenom: this.etudiantForm.value.prenom,
       numInscrp: this.etudiantForm.value.numInscrp,
       email: this.etudiantForm.value.email,
+      filiere: this.etudiantForm.value.filiere,
       deleted : false,
       avatar:this.url?this.url:'',
       createdAt : Date.now(),
@@ -150,7 +159,7 @@ supprimerEtudiant(e : Etudiant){
         'Votre document imaginaire a été supprimé.',
         'success'
       )
-  
+
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire(
         'Annulé',
@@ -160,6 +169,38 @@ supprimerEtudiant(e : Etudiant){
     }
   })
 }
+
+
+
+
+onSubmitUpdated(){
+  this.submitted = true;
+  if (this.etudiantForm.invalid) {
+      return;
+  }
+  
+  this.etudiant = ({
+  nom: this.etudiantForm.value.nom,
+  prenom: this.etudiantForm.value.prenom,
+  numInscrp: this.etudiantForm.value.numInscrp,
+  email: this.etudiantForm.value.email,
+  filiere: this.etudiantForm.value.filiere,
+  deleted : false,
+  avatar:this.url?this.url:'',
+  updatedAt : Date.now()
+  })
+
+  this.etudiantService.update(this.etudiantUpdated.id , this.etudiant).then(() => {
+    Swal.fire(
+      'Modif !',
+      'Votre document est modifié avec succée.',
+      'success'
+    )
+    this.submitted = true;
+
+  });
+}
+
 
   private getDismissReason(reason: any): string {
     this.onReset();
