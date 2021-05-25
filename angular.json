@@ -32,19 +32,12 @@
             "styles": [
               "src/styles.scss",
               "src/assets/scss/argon.scss",
-              "src/assets/scss/custum.scss",
-              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
-              "src/assets/scss/custom-data.scss"
+              "src/assets/scss/custum.scss"
 
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/clipboard/dist/clipboard.min.js"
+              "node_modules/jquery/dist/jquery.js"
+        
             ]
           },
           "configurations": {

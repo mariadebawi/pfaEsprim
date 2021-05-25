@@ -6,12 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
-
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { EtudiantComponent } from 'src/app/pages/etudiant/etudiant.component';
-// import { ToastrModule } from 'ngx-toastr';
-import { DataTablesModule } from "angular-datatables";
+
 
 @NgModule({
   imports: [
@@ -21,8 +22,9 @@ import { DataTablesModule } from "angular-datatables";
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    DataTablesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    FilterPipeModule
   ],
   declarations: [
     EtudiantComponent

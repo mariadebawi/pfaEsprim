@@ -25,21 +25,20 @@ export class EtudiantComponent implements OnInit , OnDestroy {
   submitted = false;
   etudiant: Etudiant = new Etudiant();
   etudiantUpdated: Etudiant;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-  constructor(private etudiantService: EtudiantService , private modalService: NgbModal , private formBuilder: FormBuilder) { 
-   
-    if ( $.fn.dataTable.isDataTable('#table') ) {
-      const table = $('#table').DataTable( )      }
-  else {
-    const table = $('#table').DataTable( {
-      paging: false,
-    
-  } );
-  table.destroy();
 
-  }
-   
+  config: any;
+  public labels: any = {
+      previousLabel: '&nbsp;',
+      nextLabel: '&nbsp;',
+      screenReaderPaginationLabel: 'Pagination',
+      screenReaderPageLabel: 'page',
+      screenReaderCurrentLabel: `You're on page`
+  };
+  objectsFilter = { nom: '' ,  numInscrp: ''  };
+
+
+  constructor(private etudiantService: EtudiantService , private modalService: NgbModal , private formBuilder: FormBuilder) { 
+  
 
   }
 
@@ -52,17 +51,9 @@ export class EtudiantComponent implements OnInit , OnDestroy {
     filiere: ['', Validators.required],
 });
 
-
-
-this.dtOptions = {
-  pagingType: 'full_numbers',
-  pageLength: 5,
-  dom: 'Bfrtip',
-  responsive: true,
-  language: LanguageAppFr.frensh_datatables,
-
-}
     this.retrieveEtudiants() ;
+
+   
 
   }
 
@@ -75,7 +66,11 @@ this.dtOptions = {
       )
     ).subscribe(data => {
       this.etudiantsList = data;
-      this.dtTrigger.next();
+      this.config = {
+        itemsPerPage: 5,
+        currentPage: 1,
+       totalItems: this.etudiantsList.length
+      };
 
     });
   }
@@ -170,7 +165,9 @@ supprimerEtudiant(e : Etudiant){
   })
 }
 
-
+onPageChange(event){
+  this.config.currentPage = event;
+}
 
 
 onSubmitUpdated(){
@@ -215,6 +212,5 @@ onSubmitUpdated(){
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
   }
 }

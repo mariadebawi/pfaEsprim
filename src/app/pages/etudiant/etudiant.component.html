@@ -13,8 +13,17 @@
                   </a>
                 </div>
               </div>
+
+              <div class="row d-flex justify-content-end mb-2">
+                <div class="col-md-3 col-xl-3 mx-4 ">
+                    <input class=" form-control input-search mt-4 mb-2 " [(ngModel)]="objectsFilter.nom" [value]="objectsFilter.nom" [ngModelOptions]="{standalone: true}" type="text" placeholder="rechercher par nom ...." type="text">
+                </div>
+                <div class="col-md-3 col-xl-3 mx-4 ">
+                  <input class=" form-control input-search mt-4 mb-2 " [(ngModel)]="objectsFilter.numInscrp" [value]="objectsFilter.numInscrp" [ngModelOptions]="{standalone: true}" type="text" placeholder="rechercher par numInscrp ...." type="text">
+              </div>
+            </div>        
               <div class="table-responsive">
-                <table id="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush">
                   <thead class="thead-light">
 
                     <tr>
@@ -28,7 +37,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let e of etudiantsList; let i=index">
+                    <tr *ngFor="let e of etudiantsList | filterBy: objectsFilter  | paginate: config  ">
                       <th scope="row">
                         <div class="media align-items-center">
                           <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
@@ -65,12 +74,53 @@
                           </div>
                         </div>
                       </td>
+
+              
                     </tr>
-               
+                    <tr  *ngIf="(etudiantsList | filterBy: objectsFilter).length===0 ">
+                      <td colspan="7">
+                        <div class=" justify-content-start align-items-start " style="text-align: center; ">
+                          <h5 class="mb-0 "> not found </h5>
+                      </div>
+                      </td>
+                    </tr>
+
+                  
                   </tbody>
                   
                 </table>
+
+              
               </div>
+
+              <div class="row d-flex justify-content-end  mt-5 mb-2 mr-5" *ngIf="etudiantsList.length>5">
+                <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+
+
+                  <div class="custom-pagination">
+                      <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                          <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                    <<
+                      </span>
+                      </div>
+                      <ul class="pager">
+                          <li class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                              <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+                              <div *ngIf="p.getCurrent() === page.value">
+                                  <span>{{ page.label }}</span>
+                              </div>
+                          </li>
+                      </ul>
+          
+                      <div class="pagination-next" [class.disabled]="p.isLastPage()">
+                          <span *ngIf="!p.isLastPage()" (click)="p.next()"> >> </span>
+                      </div>
+                  </div>
+          
+              </pagination-template>
+              </div>
+        
+             
             </div>
           </div>
     </div>
