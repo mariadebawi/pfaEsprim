@@ -48,7 +48,8 @@ export class EtudiantComponent implements OnInit , OnDestroy {
     prenom: ['', Validators.required],
     numInscrp: ['', Validators.required],
     email: ['', Validators.required],
-    filiere: ['', Validators.required],
+    filiere: ['', Validators.required]?['', Validators.required]:this.etudiantUpdated,
+
 });
 
     this.retrieveEtudiants() ;
@@ -74,6 +75,10 @@ export class EtudiantComponent implements OnInit , OnDestroy {
 
     });
   }
+
+  onChange(value : string) {
+    console.log('status')
+   }
 
   onSelectFile(event) {
     this.selecetdFile = event.target.files[0];
@@ -198,6 +203,12 @@ onSubmitUpdated(){
   });
 }
 
+  getFiliere(filiere) {
+    if(filiere == 'GI' ) return "genie  informatique" ;
+    if(filiere == 'GI' ) return ">genie mécatronique" ;
+    if(filiere == 'HID' ) return "genie industriel" ;
+    else return filiere ;
+  }
 
   private getDismissReason(reason: any): string {
     this.onReset();

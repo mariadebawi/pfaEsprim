@@ -55,7 +55,7 @@
                          <td>
                           {{e.email}}
                            </td> <td>
-                            {{e.filiere}}
+                            {{getFiliere(e.filiere)}}
                              </td> 
                         <td>
                           <span class="badge badge-dot mr-4">
@@ -178,7 +178,12 @@
           <div class="col-md-6">
             <div class="form-group">
               <label class="form-control-label" for="input-username">filiere</label>
-              <input type="text" class="form-control "  formControlName="filiere"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }"   placeholder="filiere">
+              <select  formControlName="filiere" class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }" (change)="onChange($event.target.value)">
+                <option value="GI">genie  informatique</option>
+                <option  value="GM">genie mécatronique</option>
+                <option  value="HID">genie industriel</option>
+              </select>
+              
               <div *ngIf="submitted && f.filiere.errors" class="invalid-feedback">
                 <div *ngIf="f.filiere.errors.required">saisir la filiere</div>
             </div>
@@ -256,7 +261,12 @@
           <div class="col-md-6">
             <div class="form-group">
               <label class="form-control-label" for="input-username">filiere</label>
-              <input type="text" class="form-control "  formControlName="filiere"   [(ngModel)]="etudiantUpdated.filiere"  class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }"   placeholder="filiere">
+              <select  formControlName="filiere" class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.filiere.errors }" (change)="onChange($event.target.value)">
+                <option [value]="etudiantUpdated.filiere">{{getFiliere(etudiantUpdated.filiere)}}</option>
+                <option value="GI"*ngIf="etudiantUpdated.filiere!='GI'" >genie  informatique</option>
+                <option  value="GM"*ngIf="etudiantUpdated.filiere!='GM'" >genie mécatronique</option>
+                <option  value="HID" *ngIf="etudiantUpdated.filiere!='HID'">genie industriel</option>
+              </select>
               <div *ngIf="submitted && f.filiere.errors" class="invalid-feedback">
                 <div *ngIf="f.filiere.errors.required">saisir la filiere</div>
             </div>
