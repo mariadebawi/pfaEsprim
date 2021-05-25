@@ -1,0 +1,287 @@
+<div class="header bg-gradient-principale pb-8 pt-5 pt-md-8"></div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+              <div class=" row align-items-center card-header border-0 m-0">
+                <div class="col-8">
+                  <h3 class="mb-0">Liste des avis</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a (click)="open(content)" placement="bottom" ngbTooltip="Ajouter un avis"  class=" btn btn-sm btn-success btn-add rounded-circle ">
+                    <i class="fas fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="row d-flex justify-content-end mb-2">
+                <div class="col-md-3 col-xl-3 mx-4 ">
+                    <input class=" form-control input-search mt-4 mb-2 " [(ngModel)]="objectsFilter.type" [value]="objectsFilter.type" [ngModelOptions]="{standalone: true}" type="text" placeholder="rechercher par type ...." type="text">
+                </div>
+            </div>        
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+
+                    <tr>
+                      <th scope="col">Type</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Date de publication</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let e of avisList | filterBy: objectsFilter  | paginate: config  ">
+                      
+                      <td>
+                        {{e.type}}
+                        <div *ngIf="e.image" class="mx-5">
+                          <div class="media align-items-center">
+                            <a href="javascript:void(0)" class="avatar mr-3">
+                              <img alt="Image placeholder" [src]="e.image">
+                            </a>
+                          </div>
+                          </div>
+                           </td>
+                        
+                         <td>
+                          {{e.descrp}}
+                           </td>
+                        <td>
+                          <span class="badge badge-dot mr-4">
+                           {{getDate(e.datePub)}}
+                          </span>
+                        </td>
+                     
+                      <td class="text-right">
+                        <div ngbDropdown placement="bottom-right">
+                          <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item"  (click)="supprimerEtudiant(e)">Supprimer</a>
+                            <a class="dropdown-item" (click)="open(contentt , e)">Modifier</a>
+                          </div>
+                        </div>
+                      </td>
+
+              
+                    </tr>
+                    <tr  *ngIf="(avisList | filterBy: objectsFilter).length===0 ">
+                      <td colspan="7">
+                        <div class=" justify-content-start align-items-start " style="text-align: center; ">
+                          <h5 class="mb-0 "> not found </h5>
+                      </div>
+                      </td>
+                    </tr>
+
+                  
+                  </tbody>
+                  
+                </table>
+
+              
+              </div>
+
+              <div class="row d-flex justify-content-end  mt-5 mb-2 mr-5" *ngIf="avisList.length>5">
+                <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+
+
+                  <div class="custom-pagination">
+                      <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                          <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                    <<
+                      </span>
+                      </div>
+                      <ul class="pager">
+                          <li class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                              <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+                              <div *ngIf="p.getCurrent() === page.value">
+                                  <span>{{ page.label }}</span>
+                              </div>
+                          </li>
+                      </ul>
+          
+                      <div class="pagination-next" [class.disabled]="p.isLastPage()">
+                          <span *ngIf="!p.isLastPage()" (click)="p.next()"> >> </span>
+                      </div>
+                  </div>
+          
+              </pagination-template>
+              </div>
+        
+             
+            </div>
+          </div>
+    </div>
+    
+  </div>
+
+
+  <!-- create student-->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title  boldFont" id="modal-basic-title">Ajouter un nouveau avis</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form  [formGroup]="avisForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+        
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">type</label>
+              <select  formControlName="type" class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.type.errors }" (change)="onChange($event.target.value)">
+                <option value="emploi">emploi</option>
+                <option  value="Absence du prof">Absence du prof</option>
+                <option  value="Note">Note</option>
+                <option  value="Rattrapage">Rattrapage</option>
+
+              </select>     
+                <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                <div *ngIf="f.type.errors.required">saisir la numInscrp</div>
+            </div>
+            </div>
+            
+          </div>
+
+          <div class="col-md-6" *ngIf="type == 'emploi'">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Image Emploi</label>
+              <div class="form-group">
+                <input type="file" name="file" id="file"  (change)="onSelectFile($event)" class="form-control-file" >
+                <img [src]="url" height="100" *ngIf="url" class="mt-3">
+              </div>     
+                
+             </div>
+          </div>
+
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">date publication</label>
+              <input type="date" class="form-control "  formControlName="datePub"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.datePub.errors }"   placeholder="datePub">
+              <div *ngIf="submitted && f.datePub.errors" class="invalid-feedback">
+                <div *ngIf="f.datePub.errors.required">saisir la email</div>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" *ngIf="type == 'emploi'" >
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Descrption</label>
+              <textarea name="" id="" cols="30" rows="10" formControlName="descrp"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.descrp.errors }" placeholder="Descrption"></textarea>
+              <div *ngIf="submitted && f.descrp.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.descrp.required">saisir la Descrption</div>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-12" *ngIf="type !== 'emploi'" >
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Descrption</label>
+              <textarea name="" id="" cols="30" rows="10" formControlName="descrp"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.descrp.errors }" placeholder="Descrption"></textarea>
+              <div *ngIf="submitted && f.descrp.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.descrp.required">saisir la Descrption</div>
+            </div>
+            </div>
+          </div>
+    
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark text-dark mx-2"(click)="modal.dismiss('Cross click')">Annuler</button>
+          <button type="button" type="submit" class="btn btn-success " >Ajouter</button>
+        </div>
+      </form>
+    </div>
+  
+  </ng-template>
+
+  <!-- create student-->
+  <ng-template #contentt let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title  boldFont" id="modal-basic-title">Modifier un  avis</h3>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form  [formGroup]="avisForm" (ngSubmit)="onSubmitUpdated()">
+        <div class="row">
+        
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">type</label>
+              <select  formControlName="type" class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.type.errors }" (change)="onChange($event.target.value)">
+                <option [value]="avisUpdated.type">{{avisUpdated.type}}</option>
+                <option value="emploi" *ngIf="avisUpdated.type!='emploi'" >emploi</option>
+                <option  value="Absence du prof" *ngIf="avisUpdated.type!='Absence du prof'">Absence du prof</option>
+                <option  value="Note" *ngIf="avisUpdated.type!='Note'">Note</option>
+                <option  value="Rattrapage" *ngIf="avisUpdated.type!='Rattrapage'">Rattrapage</option>
+              </select>     
+                <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                <div *ngIf="f.type.errors.required">saisir la numInscrp</div>
+            </div>
+            </div>
+            
+          </div>
+
+          <div class="col-md-6" *ngIf="avisUpdated.type == 'emploi' || type == 'emploi' ">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Image Emploi</label>
+              <div class="form-group">
+                <input type="file" name="file" id="file"  (change)="onSelectFile($event)" class="form-control-file" >
+                <img [src]="url" height="100" *ngIf="url" class="mt-3">
+                <img [src]="avisUpdated.image?avisUpdated.image: './assets/img/images/avatar.png'" height="100"  class="mt-3">
+
+              </div>     
+                
+             </div>
+          </div>
+
+
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">date publication</label>
+              <input type="date"   [(ngModel)]="avisUpdated.datePub" class="form-control "  formControlName="datePub"    class="form-control "  [ngClass]="{ 'is-invalid': submitted && f.datePub.errors }"   placeholder="datePub">
+              <div *ngIf="submitted && f.datePub.errors" class="invalid-feedback">
+                <div *ngIf="f.datePub.errors.required">saisir la email</div>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" *ngIf="type == 'emploi'" >
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Descrption</label>
+              <textarea name="" id="" cols="30"    [(ngModel)]="avisUpdated.descrp"   rows="10" formControlName="descrp"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.descrp.errors }" placeholder="Descrption"></textarea>
+              <div *ngIf="submitted && f.descrp.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.descrp.required">saisir la Descrption</div>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-12" *ngIf="type !== 'emploi'" >
+            <div class="form-group">
+              <label class="form-control-label" for="input-username">Descrption</label>
+              <textarea name="" id="" cols="30"  [(ngModel)]="avisUpdated.descrp"  rows="10" formControlName="descrp"    class="form-control "   [ngClass]="{ 'is-invalid': submitted && f.descrp.errors }" placeholder="Descrption"></textarea>
+              <div *ngIf="submitted && f.descrp.errors" class="invalid-feedback">
+                <div *ngIf="f.nom.descrp.required">saisir la Descrption</div>
+            </div>
+            </div>
+          </div>
+    
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark text-dark mx-2"(click)="modal.dismiss('Cross click')">Annuler</button>
+          <button type="button" type="submit" class="btn btn-success " >Modifier</button>
+        </div>
+      </form>
+    </div>
+  
+  </ng-template>

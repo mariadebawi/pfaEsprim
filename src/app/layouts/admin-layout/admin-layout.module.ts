@@ -12,6 +12,7 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { EtudiantComponent } from 'src/app/pages/etudiant/etudiant.component';
+import { AvisComponent } from 'src/app/pages/avis/avis.component';
 
 
 @NgModule({
@@ -24,10 +25,12 @@ import { EtudiantComponent } from 'src/app/pages/etudiant/etudiant.component';
     ClipboardModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    FilterPipeModule
+    FilterPipeModule,
   ],
   declarations: [
-    EtudiantComponent
+    EtudiantComponent,
+    AvisComponent
+
   ]
 })
 

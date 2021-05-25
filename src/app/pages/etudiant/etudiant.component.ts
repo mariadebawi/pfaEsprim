@@ -6,8 +6,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
-import { Subject } from 'rxjs';
-import { LanguageAppFr } from 'src/assets/18in/fr';
+
 
 
 @Component({

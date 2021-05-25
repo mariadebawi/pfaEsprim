@@ -1,0 +1,42 @@
+.table-responsive {
+    .btn.btn-add {
+        right: 0;
+        position: absolute;
+        top: 15px;
+    }
+
+    .media{
+        img{
+            height: 100%;
+        }
+    }
+}
+
+::ng-deep .modal-header {
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+::ng-deep .modal-title {
+    line-height: unset;
+}
+
+::ng-deep .modal-footer {
+    padding: 0.55rem 0 0 0;
+    border-top: 1px solid #dee2e6;
+    button:hover ,button:focus  {
+       color: #fff !important;
+    }
+}
+
+
+.avatar {
+    background: none;
+    img{
+        border-radius: 0 !important;
+        position: relative;
+        bottom: 28px;
+        left: 30px;
+    }
+}
+ 
