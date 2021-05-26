@@ -34,14 +34,14 @@ export class EtudiantComponent implements OnInit , OnDestroy {
       screenReaderCurrentLabel: `You're on page`
   };
   objectsFilter = { nom: '' ,  numInscrp: ''  };
-
+   user ;
 
   constructor(private etudiantService: EtudiantService , private modalService: NgbModal , private formBuilder: FormBuilder) { 
-  
 
   }
 
   ngOnInit() {
+
     this.etudiantForm = this.formBuilder.group({
     nom: ['', Validators.required],
     prenom: ['', Validators.required],

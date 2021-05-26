@@ -147,7 +147,7 @@
             
           </div>
 
-          <div class="col-md-6" *ngIf="type == 'emploi'">
+          <div class="col-md-6" *ngIf="type == 'emploi' || type == 'Note'">
             <div class="form-group">
               <label class="form-control-label" for="input-username">Image Emploi</label>
               <div class="form-group">
@@ -224,13 +224,13 @@
                 <option  value="Rattrapage" *ngIf="avisUpdated.type!='Rattrapage'">Rattrapage</option>
               </select>     
                 <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
-                <div *ngIf="f.type.errors.required">saisir la numInscrp</div>
+                <div *ngIf="f.type.errors.required">saisir la type</div>
             </div>
             </div>
             
           </div>
 
-          <div class="col-md-6" *ngIf="avisUpdated.type == 'emploi' || type == 'emploi' ">
+          <div class="col-md-6" *ngIf=" type == 'emploi'  || type == 'Note' ">
             <div class="form-group">
               <label class="form-control-label" for="input-username">Image Emploi</label>
               <div class="form-group">

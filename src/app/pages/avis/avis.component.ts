@@ -43,7 +43,7 @@ export class AvisComponent implements OnInit {
       descrp: ['', Validators.required],
       datePub: ['', Validators.required],
       type: ['', Validators.required]?['', Validators.required]:this.avisUpdated,
-  
+
   });
 
   this.retrieveAvis()
@@ -137,6 +137,8 @@ getDate(date){
     });
 
     this.avisUpdated= avis ;
+    this.type = this.avisUpdated?.type
+
   }
 
   
